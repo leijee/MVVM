@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>cVue</title>
+    <style>
+        .share-box {
+            position: relative;
+            width: 300px;
+        }
+
+        .shares {
+            position: absolute;
+        }
+
+        .share-box img {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <input type="text" v-model="userName" v-input="inputEvent" id="test" placeholder="用户名">
+    <p>{{userInfo.name}}</p>
+    <p>{{userInfo.age}}</p>
+    <p>{{userInfo.userDetails.weight}}</p>
+    <input type="text" v-model="userTel" id="testTel" placeholder="电话号码">
+    <img v-bind:src="imgUrl"  alt="">
+    <input type="text" v-bind:value="TestValue">
+
+    <ul>
+        <li v-for="(item,index) for testList">{{item}}</li>
+    </ul>
+
+    <p >{{userName}}</p>
+    {{userName}}
+    <button v-click="changeValue(newUserName)" v-if="false">点击触发事件</button>
+    <p>{{userName}}</p>
+    {{userTel}}
+    <div>
+        <div>
+            <p>{{userName}}</p>
+        </div>
+    </div>
+</div>
+
+<div class="share-box">
+    <img src="http://static.ydcss.com/uploads/ydui/1.jpg">
+    <img src="http://static.ydcss.com/uploads/ydui/2.jpg">
+</div>
+<script src="CVue.js"></script>
+<script>
+
+	var cvm = new CVue({
+		el: "app",
+		data: {
+			userName: '娃哈哈',
+			userTel:'15580915321',
+            newUserName:'新娃哈哈',
+            imgUrl:'http://static.ydcss.com/uploads/ydui/1.jpg',
+			TestValue:'测试一下v-bind',
+            userInfo:{
+				name:'张三',
+                age:30,
+                userDetails:{
+					weight:'50KG'
+                }
+            }
+		},
+        created(){//data数据已经开始挂载
+            console.log("data数据已绑定到vm");
+	        this.userName = "leijee";
+	        console.log(new Date().getTime());
+        },
+        mounted(){
+		    console.log("dom已渲染完成");
+	        console.log(new Date().getTime());
+        },
+		methods: {
+			changeValue: function (value) {
+				this.userName = value||"哈哈哈哈";
+				console.log("修改userName值");
+			}
+		},
+		cumputed: {
+			newName() {
+				return this.userName;
+			}
+		},
+		watched: {
+			userName(value) {
+				console.log("值发生了改变" + value);
+			}
+		}
+	})
+</script>
+</body>
+</html>
